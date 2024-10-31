@@ -57,3 +57,4 @@ C:\Users\makar\Desktop\OrderDeliveryServicesSolution\OrderService\API\obj\Debug\
 C:\Users\makar\Desktop\OrderDeliveryServicesSolution\OrderService\API\obj\Debug\net8.0\ref\API.dll
 C:\Users\makar\Desktop\OrderDeliveryServicesSolution\OrderService\API\bin\Debug\net8.0\Microsoft.Extensions.Configuration.FileExtensions.dll
 C:\Users\makar\Desktop\OrderDeliveryServicesSolution\OrderService\API\bin\Debug\net8.0\Microsoft.Extensions.Configuration.Json.dll
+C:\Users\makar\Desktop\OrderDeliveryServicesSolution\OrderService\API\obj\Debug\net8.0\API.sourcelink.json
