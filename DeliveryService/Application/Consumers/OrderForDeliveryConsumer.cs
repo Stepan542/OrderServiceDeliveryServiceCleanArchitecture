@@ -1,13 +1,14 @@
 using MassTransit;
-using Common.Interfaces;
 using Domain.Interfaces;
 using AutoMapper;
 using Microsoft.Extensions.Logging;
-using Common.Models;
+using Domain.Entities;
+using Application.Dtos;
 
 namespace Application.Consumers
 {
-    public class OrderForDeliveryConsumer : IConsumer<IOrderForDelivery>
+    // если использовать модель Order вместо OrderDto, работать не будет
+    public class OrderForDeliveryConsumer : IConsumer<OrderDto>
     {
         private readonly IDeliveryService _deliveryService;
         private readonly ILogger<OrderForDeliveryConsumer> _logger;
@@ -21,7 +22,7 @@ namespace Application.Consumers
             _mapper = mapper;
         }
 
-        public async Task Consume(ConsumeContext<IOrderForDelivery> context)
+        public async Task Consume(ConsumeContext<OrderDto> context)
         {
             var deliveryOrder = _mapper.Map<Order>(context.Message);
 

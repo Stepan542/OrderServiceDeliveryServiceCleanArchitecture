@@ -1,4 +1,6 @@
-using Common.Models;
+using Common.Infrastructure;
+using Domain.Entities;
+//using Common.Models
 
 namespace Domain.Interfaces
 {

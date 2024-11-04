@@ -1,9 +1,10 @@
 using Microsoft.EntityFrameworkCore;
-using Common.Models;
+using Domain.Entities;
+using Common.Infrastructure;
 
 namespace Infrastructure.Data
 {
-    public class DeliveryDbContext : DbContext
+    public class DeliveryDbContext : BaseDbContext
     {
         public DeliveryDbContext(DbContextOptions<DeliveryDbContext> options)
             : base(options) {}

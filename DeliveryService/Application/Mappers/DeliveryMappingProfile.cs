@@ -1,6 +1,6 @@
+using Application.Dtos;
 using AutoMapper;
-using Common.Interfaces;
-using Common.Models;
+using Domain.Entities;
 
 namespace Application.Mappers
 {
@@ -8,8 +8,7 @@ namespace Application.Mappers
     {
         public DeliveryMappingProfile()
         {
-            // Dto был бы лучше
-            CreateMap<IOrderForDelivery, Order>();
+            CreateMap<OrderDto, Order>();
         }
     }
 }

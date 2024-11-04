@@ -1,35 +1,80 @@
+using Application.Interfaces;
 using Domain.Interfaces;
-using Common.Models;
+using Domain.Entities;
+using AutoMapper;
+using Microsoft.Extensions.Logging;
+using Application.Dtos;
+using MassTransit;
 
 namespace Application.Services
 {
     public class OrderService : IOrderService
     {
         private readonly IOrderRepository _orderRepository;
+        private readonly IMapper _mapper;
+        // попробуй без OrderService в logger
+        private readonly ILogger<OrderService> _logger;
+        private readonly IPublishEndpoint _publishEndpoint;
 
-        public OrderService(IOrderRepository orderRepository)
+        public OrderService(IOrderRepository orderRepository, IMapper mapper, ILogger<OrderService> logger, 
+            IPublishEndpoint publishEndpoint)
         {
             _orderRepository = orderRepository;
+            _mapper = mapper;
+            _logger = logger;
+            _publishEndpoint = publishEndpoint;
         }
 
-        public async Task<IEnumerable<Order>> GetAllAsync()
+        public async Task<IEnumerable<OrderDto>> GetAllAsync()
         {
-            return await _orderRepository.GetAllAsync();
+           var orders = await _orderRepository.GetAllAsync();
+           return _mapper.Map<IEnumerable<OrderDto>>(orders);
         }
 
         public async Task<Order?> GetByIdAsync(int id)
         {
-            return await _orderRepository.GetByIdAsync(id);
+            var order = await _orderRepository.GetByIdAsync(id);
+            _logger.LogInformation($"Текущий Id заказа: {id}");
+            return order;
         }
 
         public async Task<Order> CreateAsync(Order order)
         {
-            return await _orderRepository.CreateAsync(order);
+            _logger.LogInformation("recieved an order: {@Order}", order);
+
+            var createdOrder = await _orderRepository.CreateAsync(order);
+
+            try {
+                await _publishEndpoint.Publish<OrderDto>(createdOrder);
+                _logger.LogInformation("published: {@Order}", order);
+            }
+
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "an error occured while sending the event.");
+            }
+
+            return createdOrder;
         }
 
-        public async Task UpdateAsync(Order order)
+        public async Task<bool> UpdateAsync(Order order)
         {
-            await _orderRepository.UpdateAsync(order);
+            var currentOrder = await _orderRepository.GetByIdAsync(order.Id);
+            if (currentOrder == null) 
+            {
+                _logger.LogInformation("Текущий объект  пуст");
+
+                return false;
+            }
+
+            _logger.LogInformation($"Текущий Id заказа: {order.Id}");
+            _logger.LogInformation($"{currentOrder.Id}, {currentOrder.Name}, {currentOrder.Price}");
+            
+            if (currentOrder == null) return false;
+            _mapper.Map(order, currentOrder);
+
+            await _orderRepository.UpdateAsync(currentOrder);
+            return true;
         }
 
         public async Task DeleteAsync(int id)

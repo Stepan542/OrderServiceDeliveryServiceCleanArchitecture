@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace Infrastructure.Data
 {
-    public class ApplicationDbContexFactory : IDesignTimeDbContextFactory<DeliveryDbContext>
+    public class DeliveryDbContexFactory : IDesignTimeDbContextFactory<DeliveryDbContext>
     {
         public DeliveryDbContext CreateDbContext(string[] args)
         {
@@ -14,7 +14,7 @@ namespace Infrastructure.Data
                 .AddJsonFile(@"C:\Users\makar\Desktop\OrderDeliveryServicesSolution\DeliveryService\API\appsettings.json")
                 .Build();
 
-            optionsBuilder.UseNpgsql(config.GetConnectionString("DeliveryDb"));
+            optionsBuilder.UseNpgsql(config.GetConnectionString("DeliveryDB"));
 
             return new DeliveryDbContext(optionsBuilder.Options);
         }

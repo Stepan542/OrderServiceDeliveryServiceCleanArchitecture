@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Domain.Interfaces;
-using Common.Models;
+using Domain.Entities;
 
 namespace DeliveryService.Controllers
 {
@@ -27,11 +27,9 @@ namespace DeliveryService.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByIdAsync(int id)
         {
-            _logger.LogInformation($"got id {id}");
+            // _logger.LogInformation($"got id {id}");
             var delivery = await _deliveryService.GetByIdAsync(id);
-
-            if (delivery == null) return NotFound();
-
+            // if (delivery == null) return NotFound();
             return Ok(delivery);
         }
     }

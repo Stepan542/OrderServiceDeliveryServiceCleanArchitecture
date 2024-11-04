@@ -1,4 +1,5 @@
-using Common.Models;
+using Domain.Entities;
+using Common.Infrastructure;
 using Infrastructure.Data;
 using Domain.Interfaces;
 
@@ -6,7 +7,6 @@ namespace Infrastructure.Repositories
 {
     public class DeliveryRepository : BaseRepository<Order>, IDeliveryRepository
     {
-        // нужно ли писать crud для сервисов?
-        public DeliveryRepository(DeliveryDbContext contex) : base(contex) {}
+        public DeliveryRepository(BaseDbContext contex) : base(contex) {}
     }
 }

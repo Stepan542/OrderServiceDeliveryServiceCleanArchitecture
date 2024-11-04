@@ -18,7 +18,7 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "text", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: true),
                     Quantity = table.Column<int>(type: "integer", nullable: false),
                     Price = table.Column<decimal>(type: "numeric", nullable: false),
                     OrderDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)

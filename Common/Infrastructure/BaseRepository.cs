@@ -1,14 +1,12 @@
-using Domain.Interfaces;
-using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Repositories
+namespace Common.Infrastructure
 {
-    public class BaseRepository<T> : IBaseRepository<T> where T: class
+     public class BaseRepository<T> : IBaseRepository<T> where T: class
     {
-        protected readonly ApplicationDbContext _dbContext;
+        protected readonly BaseDbContext _dbContext;
 
-        public BaseRepository(ApplicationDbContext dbContext)
+        public BaseRepository(BaseDbContext dbContext)
         {
             _dbContext = dbContext;
         }
