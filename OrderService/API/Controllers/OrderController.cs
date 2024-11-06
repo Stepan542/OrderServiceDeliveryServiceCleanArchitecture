@@ -43,8 +43,8 @@ namespace API.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAsync([FromRoute] int id, [FromBody] Order order)
         {
-            // order.Id = id;
-            // if (order == null) return NotFound();
+            order.Id = id;
+            if (order == null) return NotFound();
             await _orderService.UpdateAsync(order);
             return Ok();
         }

@@ -1,14 +1,18 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+
 
 namespace Common.Infrastructure
 {
      public class BaseRepository<T> : IBaseRepository<T> where T: class
     {
         protected readonly BaseDbContext _dbContext;
+        protected readonly ILogger<BaseRepository<T>> _logger;
 
-        public BaseRepository(BaseDbContext dbContext)
+        public BaseRepository(BaseDbContext dbContext, ILogger<BaseRepository<T>> logger)
         {
             _dbContext = dbContext;
+            _logger = logger;
         }
 
         public async Task<IEnumerable<T>> GetAllAsync()
@@ -32,6 +36,7 @@ namespace Common.Infrastructure
         {
             _dbContext.Entry(entity).State = EntityState.Modified;
             await _dbContext.SaveChangesAsync();
+            _logger.LogInformation("Я внёс изменения.");
         }
 
         public async Task DeleteAsync(int id)

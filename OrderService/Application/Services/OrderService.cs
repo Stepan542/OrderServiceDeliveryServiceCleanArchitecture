@@ -71,7 +71,14 @@ namespace Application.Services
             _logger.LogInformation($"{currentOrder.Id}, {currentOrder.Name}, {currentOrder.Price}");
             
             if (currentOrder == null) return false;
-            _mapper.Map(order, currentOrder);
+            _logger.LogInformation($"До Map: {currentOrder.Name}, {currentOrder.Quantity}, {currentOrder.Price}");
+            // работает только явное преобразование
+            currentOrder.Name = order.Name;
+            currentOrder.Quantity = order.Quantity;
+            currentOrder.Price = order.Price;
+            // Map не преобразует данные
+            // _mapper.Map(order, currentOrder);
+            _logger.LogInformation($"После Map: {currentOrder.Name}, {currentOrder.Quantity}, {currentOrder.Price}");
 
             await _orderRepository.UpdateAsync(currentOrder);
             return true;
