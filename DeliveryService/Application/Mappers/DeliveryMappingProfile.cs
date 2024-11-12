@@ -8,6 +8,7 @@ namespace Application.Mappers
     {
         public DeliveryMappingProfile()
         {
+            // сейчас он бесполезен, так как происхоодит явное преобразование в сервисах
             CreateMap<OrderDto, Order>();
         }
     }

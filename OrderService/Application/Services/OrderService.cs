@@ -25,10 +25,11 @@ namespace Application.Services
             _publishEndpoint = publishEndpoint;
         }
 
+        // сделать List
         public async Task<IEnumerable<OrderDto>> GetAllAsync()
         {
            var orders = await _orderRepository.GetAllAsync();
-           return _mapper.Map<IEnumerable<OrderDto>>(orders);
+           return _mapper.Map<List<OrderDto>>(orders);
         }
 
         public async Task<Order?> GetByIdAsync(int id)
@@ -77,7 +78,9 @@ namespace Application.Services
             currentOrder.Quantity = order.Quantity;
             currentOrder.Price = order.Price;
             // Map не преобразует данные
-            // _mapper.Map(order, currentOrder);
+            // сделать create order
+
+             _mapper.Map(order, currentOrder);
             _logger.LogInformation($"После Map: {currentOrder.Name}, {currentOrder.Quantity}, {currentOrder.Price}");
 
             await _orderRepository.UpdateAsync(currentOrder);
@@ -90,3 +93,9 @@ namespace Application.Services
         }
     }
 }
+
+// Order dto в application, presentaion
+// как работает функции изнутри
+// nullable 
+// синт. сахар
+//

@@ -8,7 +8,7 @@ namespace Application.Mappers
     {
         public MappingProfile()
         {
-            CreateMap<Order, OrderDto>().ReverseMap();
+            CreateMap<Order, OrderDto>();
         }
     }
 }
